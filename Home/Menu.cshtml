@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="resList.css">
+    <link rel="stylesheet" href="navBar.css">
+
+    <!-- For using font family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200;500&display=swap" rel="stylesheet">
+
+    <!-- Google material -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+    <title>Restuarant</title>
+    <style>
+        * {
+            font-family: 'Anuphan', sans-serif;
+            position: relative;
+            margin: 0px;
+        }
+
+        ul {
+            position: fixed;
+            width: 100%;
+            top: 0px;
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+            background-color: bisque;
+        }
+
+        li {
+            font-size: 30px;
+            float: right;
+            padding: 5px 15px;
+        }
+
+            li:hover {
+                background-color: rgb(255, 247, 237);
+                cursor: pointer;
+            }
+
+            li:active {
+                background-color: bisque;
+            }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .main {
+            margin-top: 60px;
+        }
+
+        .logoutChange {
+            color: crimson !important;
+        }
+
+        .button {
+            font-size: 1em;
+            padding: 10px;
+            color: #fff;
+            border: 2px solid #06D85F;
+            border-radius: 20px/50px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease-out;
+        }
+
+            .button:hover {
+                background: #06D85F;
+            }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+            .overlay:target {
+                visibility: visible;
+                opacity: 1;
+            }
+
+        .popup {
+            margin: 70px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            width: 30%;
+            height: 10%;
+            position: relative;
+            transition: all 5s ease-in-out;
+        }
+
+            .popup h2 {
+                margin-top: 0;
+                color: #333;
+                font-family: Tahoma, Arial, sans-serif;
+            }
+
+            .popup .close {
+                position: absolute;
+                top: 20px;
+                right: 30px;
+                transition: all 200ms;
+                font-size: 30px;
+                font-weight: bold;
+                text-decoration: none;
+                color: #333;
+            }
+
+                .popup .close:hover {
+                    color: #06D85F;
+                }
+
+            .popup .content {
+                max-height: 30%;
+                overflow: auto;
+            }
+        .btn-2 {
+            text-align: center;
+            font-size: 300%;
+            border-radius: 20%;
+        }
+
+            .btn-2:before {
+                height: 0%;
+                width: 2px;
+            }
+
+            .btn-2:hover {
+                box-shadow: 4px 4px 6px 0 rgba(255,255,255,.5), -4px -4px 6px 0 rgba(116, 125, 136, .5), inset -4px -4px 6px 0 rgba(255,255,255,.2), inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+            }
+        h1 {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .resCardList {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding-left: 3vw;
+            padding-right: 3vw;
+            padding-top: 1vw;
+            padding-bottom: 3vw;
+        }
+
+        .resCard {
+            width: 20vw;
+            height: 80vh;
+            position: relative;
+            border-radius: 7px;
+            background-size: cover;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            transition-duration: 0.3s;
+        }
+
+        .cardLink:hover {
+            transform: scale(1.05);
+            transition-duration: 0.3s;
+        }
+
+        .cardLink:not(:hover) {
+            transform: scale(1);
+            transition-duration: 0.3s;
+        }
+
+        .cardLink:active {
+            transform: scale(1.03);
+            transition-duration: 0.1s;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+        }
+
+        p {
+            position: absolute;
+            top: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <ul>
+            <li style="float: left;">
+                <a href="login.html">
+                    <span class="material-symbols-rounded logoutChange">
+                        logout
+                    </span> ออกจากระบบ
+                </a>
+            </li>
+
+            <li>
+                <a href="#"></a><span class="material-symbols-rounded">
+                    motorcycle
+                </span> รับฝาก
+            </li>
+            <li><a href="cart.html"><span class="material-symbols-rounded">shopping_cart</span> รถเข็น</a></li>
+        </ul>
+
+
+        <div class="main">
+            <h1 class="header">กรุณาเลือกร้านอาหาร</h1>
+
+            <div class="resCardList">
+                <a href="foodListA.html" class="cardLink">
+                    <div class="resCard" style="background-image: url('https://www.editionhotels.com/wp-content/uploads/2023/02/Tampa3_20a_RGB_V2.jpg');">
+                    </div>
+                </a>
+
+
+                <a href="foodListB.html" class="cardLink">
+                    <div class="resCard" style="background-image: url('https://images.adsttc.com/media/images/5e4c/1025/6ee6/7e0b/9d00/0877/large_jpg/feature_-_Main_hall_1.jpg?1582043123');">
+                    </div>
+                </a>
+
+
+                <a href="foodListC.html" class="cardLink">
+                    <div class="resCard" style="background-image: url('https://media.vanityfair.com/photos/624db93288fcf914e1a594bc/master/w_1600%2Cc_limit/Steven%2520Joyce-JOS2021050D00077.jpg');">
+                    </div>
+                </a>
+
+
+                <a href="foodListD.html" class="cardLink">
+                    <div class="resCard" style="background-image: url('https://nolinskiparis.com/wp-content/uploads/2022/06/restaurant-nolinski-paris-5-etoiles-luxe-12-guillaume-de-laubier.jpg');">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <a class="button" href="#popup1">Notification cancel</a>
+    </div>
+    <div class="box">
+        <a class="button" href="#popup2">Notification Done</a>
+    </div>
+    <div id="popup1" class="overlay">
+        <div class="popup">
+
+            <a class="close" href="#">&times;</a>
+
+            <div style="text-align:center">
+                <p>Worker Cancel</p>
+            </div>
+        </div>
+    </div>
+    <div id="popup2" class="overlay">
+        <div class="popup">
+
+            <a class="close" href="#">&times;</a>
+
+            <div style="text-align:center">
+                <p>Enjoy your meal</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,283 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:100" rel="stylesheet">
+    
+    <title></title>
+    <style>
+        body {
+            background-color: lightcoral;
+            text-align: center;
+        }
+
+        header {
+            text-align: center;
+            font-family: sans-serif;
+            color: white;
+        }
+
+
+        @@keyframes loader {
+            0% {
+                width: 10%;
+                transform: rotate(0deg);
+            }
+
+            10% {
+                left: 0%;
+                transform: rotate(0deg);
+            }
+
+            20% {
+                width: 0%;
+                left: 20%;
+            }
+
+            30% {
+                width: 25%;
+            }
+
+            50% {
+                left: 15%;
+                width: 35%;
+            }
+
+            70% {
+                width: 30%;
+                left: 18%;
+                transform: rotate(240deg);
+            }
+
+            90% {
+                width: 30%;
+                left: 10%;
+            }
+
+            100% {
+                width: 2%;
+                left: 25%;
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes pan {
+            0% {
+                transform: rotate(0deg);
+                transform-origin: top right;
+            }
+
+            10% {
+                transform: rotate(-2deg);
+                transform-origin: top right;
+            }
+
+            50% {
+                transform: rotate(15deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @@keyframes shadow {
+            0% {
+                width: 30%;
+            }
+
+            50% {
+                width: 40%;
+                left: 20px;
+            }
+
+            100% {
+                width: 30%;
+            }
+        }
+
+        .pan-loader {
+            width: 180px;
+            height: 180px;
+            // border: 1px solid red;
+            margin: 100px auto;
+            .loader
+
+        {
+            position: relative;
+            top: 10%;
+            left: 0;
+            z-index: -1;
+            width: 60%;
+            height: 45%;
+            border: 10px solid transparent;
+            border-bottom: 10px solid #FDD835;
+            border-radius: 50%;
+            animation: loader 2s infinite;
+            animation-timing-function: linear;
+        }
+
+        .pan-container {
+            display: flex;
+            width: 100%;
+            animation: pan 2s infinite;
+        }
+
+        .pan {
+            width: 60%;
+            height: 20px;
+            background: linear-gradient(#3949AB, #5C6BC0);
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+
+        .handle {
+            width: 40%;
+            height: 10px;
+            background: linear-gradient(#3949AB, #5C6BC0);
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .shadow {
+            position: relative;
+            top: 15%;
+            left: 15%;
+            width: 30%;
+            height: 8px;
+            background: lightgray;
+            // box-shadow: 5px 0 8px 4px lightgray;
+            border-radius: 20px;
+            animation: shadow 2s infinite;
+        }
+
+        }
+
+        .container {
+            height: 100% ;
+            width: 100%; 
+            justify-content :center;
+            align-items: center; 
+            display: flex;
+            padding-top: 100px;
+        }
+
+        .text {
+            font-weight: 100;
+            font-size: 40px;
+            color: #FAFAFA;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            text-shadow: 2px 2px 4px red
+        }
+
+        .dud {
+            color: #757575
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text"></div>
+    </div>
+    <!-- about section-->
+    <div class="pan-loader">
+        <div class="loader"></div>
+        <div class="pan-container">
+            <div class="pan"></div>
+            <div class="handle"></div>
+        </div>
+        <div class="shadow"></div>
+    </div>
+   <script>
+       // ——————————————————————————————————————————————————
+       // TextScramble
+       // ——————————————————————————————————————————————————
+
+       class TextScramble {
+           constructor(el) {
+               this.el = el
+               this.chars = '!<>-_\\/[]{}—=+*^?#________'
+               this.update = this.update.bind(this)
+           }
+           setText(newText) {
+               const oldText = this.el.innerText
+               const length = Math.max(oldText.length, newText.length)
+               const promise = new Promise((resolve) => this.resolve = resolve)
+               this.queue = []
+               for (let i = 0; i < length; i++) {
+                   const from = oldText[i] || ''
+                   const to = newText[i] || ''
+                   const start = Math.floor(Math.random() * 40)
+                   const end = start + Math.floor(Math.random() * 40)
+                   this.queue.push({ from, to, start, end })
+               }
+               cancelAnimationFrame(this.frameRequest)
+               this.frame = 0
+               this.update()
+               return promise
+           }
+           update() {
+               let output = ''
+               let complete = 0
+               for (let i = 0, n = this.queue.length; i < n; i++) {
+                   let { from, to, start, end, char } = this.queue[i]
+                   if (this.frame >= end) {
+                       complete++
+                       output += to
+                   } else if (this.frame >= start) {
+                       if (!char || Math.random() < 0.28) {
+                           char = this.randomChar()
+                           this.queue[i].char = char
+                       }
+                       output += `<span class="dud">${char}</span>`
+                   } else {
+                       output += from
+                   }
+               }
+               this.el.innerHTML = output
+               if (complete === this.queue.length) {
+                   this.resolve()
+               } else {
+                   this.frameRequest = requestAnimationFrame(this.update)
+                   this.frame++
+               }
+           }
+           randomChar() {
+               return this.chars[Math.floor(Math.random() * this.chars.length)]
+           }
+       }
+
+       // ——————————————————————————————————————————————————
+       // Example
+       // ——————————————————————————————————————————————————
+
+       const phrases = [
+           'Thank you for using our service,',
+           'Sooner or later',
+           'Please wait for the food',
+           'Our worker is buying for you',
+        
+       ]
+
+       const el = document.querySelector('.text')
+       const fx = new TextScramble(el)
+
+       let counter = 0
+       const next = () => {
+           fx.setText(phrases[counter]).then(() => {
+               setTimeout(next, 800)
+           })
+           counter = (counter + 1) % phrases.length
+       }
+
+       next()
+       </script>
+</body>
+</html>
